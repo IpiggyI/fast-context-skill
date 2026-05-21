@@ -11,7 +11,7 @@ metadata:
 
 Use Fast Context as the first pass for codebase-aware work: locating implementation paths, tracing flows, finding tests, and collecting the complete definitions needed before producing code or project-specific advice.
 
-This skill runs `scripts/fast-context-search.mjs` directly. The script uses vendored Fast Context core logic from the upstream `v1.3.0-beta.2` source and Windsurf Devstral, but it does not require the Fast Context MCP server to be installed or enabled. It does not replace exact local inspection; use returned file paths and grep keywords to drive targeted `rg`, `sed`, and file reads.
+This skill runs `scripts/fast-context-search.mjs` directly from the installed skill directory. The script uses vendored Fast Context core logic from the upstream `v1.3.0-beta.2` source and Windsurf Devstral, but it does not require the Fast Context MCP server to be installed or enabled. It does not replace exact local inspection; use returned file paths and grep keywords to drive targeted `rg`, `sed`, and file reads.
 
 ## When To Use
 
@@ -24,7 +24,7 @@ Skip this skill for purely conversational tasks, tiny known-file edits, or third
 ## Workflow
 
 1. Build one natural-language query that names the user goal and asks for the exact context needed. Prefer "Where", "What", and "How" questions.
-2. Run `node /Users/mizu/.codex/skills/fast-context/scripts/fast-context-search.mjs` with `--project` set to the absolute project root and `--query` set to the natural-language search query.
+2. Resolve the installed skill directory and run `node <skill-directory>/scripts/fast-context-search.mjs` with `--project` set to the absolute project root and `--query` set to the natural-language search query.
 3. Read the returned file ranges and use the suggested grep keywords with local tools to inspect exact definitions.
 4. Run a completeness check: make sure all relevant classes, functions, variables, types, config, routes, call sites, and tests have been identified with full signatures.
 5. If anything is missing, recursively query Fast Context again with the missing concept, symbol, or flow.
@@ -33,7 +33,7 @@ Skip this skill for purely conversational tasks, tiny known-file edits, or third
 ## Default Command
 
 ```bash
-node /Users/mizu/.codex/skills/fast-context/scripts/fast-context-search.mjs \
+node /path/to/installed/fast-context/scripts/fast-context-search.mjs \
   --project "/absolute/path/to/project" \
   --query "Where is <feature or behavior> implemented, and what full definitions, signatures, call sites, config, and tests are relevant to <user goal>?" \
   --max-results 10 \
@@ -56,7 +56,7 @@ Use `max_results` 3-5 for focused symbol lookup, 10-20 for feature tracing, and 
 - If results are too shallow, increase `max_turns` or `max_results`, or query a narrower symbol or flow.
 - If the repo map is too large, reduce `tree_depth`, add `exclude_paths`, or use `repo_map_mode: "bootstrap_hotspot"`.
 - If authentication fails, run the same script with `--check-key` to verify local Windsurf key discovery, then retry after Windsurf is logged in or `WINDSURF_API_KEY` is set.
-- If Node dependencies are missing, run `npm install` in `/Users/mizu/.codex/skills/fast-context`.
+- If Node dependencies are missing, run `npm install` in the installed Fast Context skill directory.
 - If the script is unavailable or still fails, state that briefly and continue with local `rg --files`, `rg`, and targeted file reads.
 
 ## Reference

@@ -1,7 +1,7 @@
 {
   "name": "fast-context-skill",
   "version": "0.1.0",
-  "description": "Codex Skill and CLI adaptation of fast-context-mcp that runs Windsurf Devstral semantic code search without an MCP server.",
+  "description": "Agent Skill and CLI adaptation of fast-context-mcp that runs Windsurf Devstral semantic code search without an MCP server.",
   "license": "MIT",
   "type": "module",
   "bin": {
@@ -29,6 +29,8 @@
   },
   "homepage": "https://github.com/oulkurt/fast-context-skill#readme",
   "keywords": [
+    "agent-skill",
+    "skills-cli",
     "codex",
     "skill",
     "fast-context",

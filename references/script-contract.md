@@ -5,7 +5,7 @@
 Run semantic repository search without the Fast Context MCP server:
 
 ```bash
-node /Users/mizu/.codex/skills/fast-context/scripts/fast-context-search.mjs \
+node /path/to/installed/fast-context/scripts/fast-context-search.mjs \
   --project "/absolute/path/to/project" \
   --query "Where is <feature> implemented?"
 ```
@@ -64,4 +64,4 @@ If any item is unknown and relevant, run another focused Fast Context query or i
 
 ## Failure Handling
 
-If Node dependencies are missing, run `npm install` from `/Users/mizu/.codex/skills/fast-context`. If the vendored core files are missing, repair or reinstall the skill. If the search fails because the repository is too large, retry with lower `tree_depth` and more `exclude_paths`. If results are incomplete, retry with a narrower query, higher `max_turns`, or `repo_map_mode: "bootstrap_hotspot"`. If Windsurf authentication fails, run `--check-key`, ensure Windsurf is logged in, or set `WINDSURF_API_KEY` in the environment.
+If Node dependencies are missing, run `npm install` from the installed Fast Context skill directory. If the vendored core files are missing, repair or reinstall the skill. If the search fails because the repository is too large, retry with lower `tree_depth` and more `exclude_paths`. If results are incomplete, retry with a narrower query, higher `max_turns`, or `repo_map_mode: "bootstrap_hotspot"`. If Windsurf authentication fails, run `--check-key`, ensure Windsurf is logged in, or set `WINDSURF_API_KEY` in the environment.

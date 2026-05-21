@@ -2,34 +2,46 @@
 
 [![skills.sh](https://skills.sh/b/oulkurt/fast-context-skill)](https://skills.sh/oulkurt/fast-context-skill)
 
-Fast Context Skill is a Codex Skill and CLI adaptation of [`SammySnake-d/fast-context-mcp`](https://github.com/SammySnake-d/fast-context-mcp).
+Fast Context Skill is an Agent Skill and CLI adaptation of [`SammySnake-d/fast-context-mcp`](https://github.com/SammySnake-d/fast-context-mcp).
 
-It is a fork-style rewrite of the original MCP project: the Windsurf Devstral semantic search core is vendored from upstream `v1.3.0-beta.2`, while the MCP server wrapper is removed. Codex can use this as a Skill by running a local script, which avoids loading the Fast Context MCP tool schema in every session.
+It is a fork-style rewrite of the original MCP project: the Windsurf Devstral semantic search core is vendored from upstream `v1.3.0-beta.2`, while the MCP server wrapper is removed. Any Skills-compatible agent that can run local scripts can use this Skill; Codex is one supported install target, not a requirement.
 
 ## What Changed From The MCP Repo
 
 - Keeps the upstream semantic search loop that talks to Windsurf Devstral.
 - Keeps local command execution helpers for `rg`, file reads, tree output, and context gathering.
 - Removes the MCP server entry point from the runtime path.
-- Adds a Codex `SKILL.md` workflow.
+- Adds an agent-friendly `SKILL.md` workflow.
 - Adds `scripts/fast-context-search.mjs` as the direct CLI entry point.
 - Adds npm packaging and GitHub Actions publishing.
 
-## Install As A Codex Skill
+## Install With skills CLI
 
 One-command install via the open `skills` CLI:
+
+```bash
+npx skills add oulkurt/fast-context-skill --skill fast-context -y
+```
+
+To install to every agent target supported by your local `skills` CLI:
+
+```bash
+npx skills add oulkurt/fast-context-skill --skill fast-context -a '*' -y
+```
+
+Use the `-a` flag when you want to target a specific agent supported by your `skills` CLI version. For Codex:
 
 ```bash
 npx skills add oulkurt/fast-context-skill --skill fast-context -a codex -y
 ```
 
-For a global Codex install:
+For a global Codex install specifically:
 
 ```bash
 npx skills add oulkurt/fast-context-skill --skill fast-context -a codex -g -y
 ```
 
-Manual install:
+Manual install is agent-specific: clone this repository into the skill directory your agent reads, then run `npm install` from that directory. For Codex:
 
 ```bash
 git clone https://github.com/oulkurt/fast-context-skill.git ~/.codex/skills/fast-context
@@ -37,10 +49,10 @@ cd ~/.codex/skills/fast-context
 npm install
 ```
 
-Then use `$fast-context` in Codex. In a fresh Codex session, the Skill will instruct Codex to run:
+Then invoke `$fast-context` or your agent's skill invocation convention. The Skill instructs the agent to run the bundled script from the installed skill directory, for example:
 
 ```bash
-node ~/.codex/skills/fast-context/scripts/fast-context-search.mjs \
+node /path/to/installed/fast-context/scripts/fast-context-search.mjs \
   --project "/absolute/path/to/project" \
   --query "Where is authentication implemented?"
 ```
