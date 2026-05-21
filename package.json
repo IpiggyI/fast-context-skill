@@ -1,47 +1,45 @@
 {
-  "name": "@sammysnake/fast-context-mcp",
-  "version": "1.3.0-beta.2",
-  "description": "AI-driven semantic code search via reverse-engineered Windsurf protocol (Node.js)",
+  "name": "fast-context-skill",
+  "version": "0.1.0",
+  "description": "Codex Skill and CLI adaptation of fast-context-mcp that runs Windsurf Devstral semantic code search without an MCP server.",
+  "license": "MIT",
   "type": "module",
-  "main": "src/server.mjs",
   "bin": {
-    "fast-context-mcp": "src/server.mjs"
+    "fast-context-skill": "scripts/fast-context-search.mjs"
   },
   "files": [
-    "src/",
-    "README.md",
-    "LICENSE"
+    "SKILL.md",
+    "agents/",
+    "references/",
+    "scripts/",
+    "LICENSE",
+    "NOTICE.md",
+    "README.md"
   ],
   "scripts": {
-    "start": "node src/server.mjs"
-  },
-  "engines": {
-    "node": ">=18"
+    "search": "node scripts/fast-context-search.mjs",
+    "test": "node --check scripts/fast-context-search.mjs && node --check scripts/lib/core.mjs && node scripts/fast-context-search.mjs --help >/dev/null"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SammySnake-d/fast-context-mcp.git"
+    "url": "git+https://github.com/oulkurt/fast-context-skill.git"
   },
-  "homepage": "https://github.com/SammySnake-d/fast-context-mcp#readme",
   "bugs": {
-    "url": "https://github.com/SammySnake-d/fast-context-mcp/issues"
+    "url": "https://github.com/oulkurt/fast-context-skill/issues"
   },
+  "homepage": "https://github.com/oulkurt/fast-context-skill#readme",
   "keywords": [
-    "mcp",
-    "code-search",
+    "codex",
+    "skill",
+    "fast-context",
     "semantic-search",
     "windsurf",
     "devstral",
-    "ripgrep",
-    "claude",
-    "ai"
+    "code-search"
   ],
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.0.0",
     "@vscode/ripgrep": "^1.15.9",
     "sql.js": "^1.14.0",
-    "tree-node-cli": "^1.6.0",
-    "zod": "^3.23.0"
-  },
-  "license": "MIT"
+    "tree-node-cli": "^1.6.0"
+  }
 }

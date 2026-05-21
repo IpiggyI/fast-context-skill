@@ -1,24 +1,9 @@
 node_modules/
 .DS_Store
 *.log
-
-# Local MCP config (may contain secrets)
-.mcp.json
-
-# Local docs (not for distribution)
-localdocs/
-
-# Legacy Python artifacts
-__pycache__/
-*.pyc
-*.pyo
-.venv/
-venv/
-*.egg-info/
+npm-debug.log*
+.env
+.env.*
+!.env.example
+coverage/
 dist/
-build/
-uv.lock
-test_*.py
-
-# Old Node.js dev copy
-fast-context-mcp-node/

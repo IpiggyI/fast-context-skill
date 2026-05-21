@@ -1841,7 +1841,7 @@ export async function searchWithContent({
       if (meta.errorCode === "PAYLOAD_TOO_LARGE" || meta.errorCode === "TIMEOUT") {
         errMsg += `\n[hint] Payload/timeout error. Try: reduce tree_depth, reduce max_turns, add exclude_paths, or narrow project_path to a subdirectory.`;
       } else if (meta.errorCode === "AUTH_ERROR") {
-        errMsg += `\n[hint] Authentication error. The API key may be expired or revoked. Try re-extracting with extract_windsurf_key, or set a fresh WINDSURF_API_KEY.`;
+        errMsg += `\n[hint] Authentication error. The API key may be expired or revoked. Run fast-context-search.mjs --check-key, ensure Windsurf is logged in, or set a fresh WINDSURF_API_KEY.`;
       } else if (meta.errorCode === "RATE_LIMITED") {
         errMsg += `\n[hint] Rate limited. Wait a moment and retry.`;
       } else {
