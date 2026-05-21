@@ -1901,6 +1901,6 @@ export async function searchWithContent({
  * Extract Windsurf API Key info (for MCP tool use).
  * @returns {Promise<Object>}
  */
-export async function extractKeyInfo() {
-  return extractKey();
+export async function extractKeyInfo(dbPath) {
+  return extractKey(dbPath);
 }

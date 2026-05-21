@@ -80,24 +80,59 @@ npx fast-context-skill \
 
 This project still depends on Windsurf's Devstral backend. It replaces the MCP layer, not the Windsurf backend.
 
-The script can usually discover the key automatically from a logged-in Windsurf desktop installation:
+The script can usually discover the key automatically from a logged-in Windsurf desktop installation, so most users do not need to copy a key manually.
+
+After installing the Skill, verify local key discovery:
+
+```bash
+node /path/to/installed/fast-context/scripts/fast-context-search.mjs --check-key
+```
+
+For a project install, run this from the project root:
+
+```bash
+node .agents/skills/fast-context/scripts/fast-context-search.mjs --check-key
+```
+
+For Codex global installs, that path is usually:
+
+```bash
+node ~/.codex/skills/fast-context/scripts/fast-context-search.mjs --check-key
+```
+
+`--check-key` prints only a masked key and the local database path. It does not print the full secret.
+
+If you need the full key locally, print it with:
+
+```bash
+node /path/to/installed/fast-context/scripts/fast-context-search.mjs --print-key
+```
+
+If you want to set `WINDSURF_API_KEY` for the current shell in one command:
+
+```bash
+eval "$(node /path/to/installed/fast-context/scripts/fast-context-search.mjs --key-env)"
+```
+
+For a project install, the same command is:
+
+```bash
+eval "$(node .agents/skills/fast-context/scripts/fast-context-search.mjs --key-env)"
+```
+
+From a repository clone:
 
 ```bash
 node scripts/fast-context-search.mjs --check-key
+node scripts/fast-context-search.mjs --print-key
+eval "$(node scripts/fast-context-search.mjs --key-env)"
 ```
 
-That command prints only a masked key and the local database path. It does not print the full secret.
-
-If you need to set the key explicitly for a shell session:
+Without cloning, you can run the GitHub package directly with `npx`:
 
 ```bash
-export WINDSURF_API_KEY="<your-windsurf-api-key>"
-```
-
-If you need to extract the full key locally, run this from the repository root:
-
-```bash
-node --input-type=module -e 'import { extractKey } from "./scripts/lib/extract-key.mjs"; const r = await extractKey(); if (r.error) { console.error(r.error); process.exit(1); } console.log(r.api_key);'
+npx --yes github:oulkurt/fast-context-skill --check-key
+eval "$(npx --yes github:oulkurt/fast-context-skill --key-env)"
 ```
 
 Treat the value like any other API secret:

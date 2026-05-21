@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "search": "node scripts/fast-context-search.mjs",
-    "test": "node --check scripts/fast-context-search.mjs && node --check scripts/lib/core.mjs && node scripts/fast-context-search.mjs --help >/dev/null"
+    "test": "node --check scripts/fast-context-search.mjs && node --check scripts/lib/core.mjs && node scripts/fast-context-search.mjs --help >/dev/null && node test/cli.mjs"
   },
   "repository": {
     "type": "git",

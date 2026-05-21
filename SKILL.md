@@ -56,6 +56,7 @@ Use `max_results` 3-5 for focused symbol lookup, 10-20 for feature tracing, and 
 - If results are too shallow, increase `max_turns` or `max_results`, or query a narrower symbol or flow.
 - If the repo map is too large, reduce `tree_depth`, add `exclude_paths`, or use `repo_map_mode: "bootstrap_hotspot"`.
 - If authentication fails, run the same script with `--check-key` to verify local Windsurf key discovery, then retry after Windsurf is logged in or `WINDSURF_API_KEY` is set.
+- If the user explicitly needs the key, use `--print-key` to print it locally or `--key-env` to print an `export WINDSURF_API_KEY=...` command for the current shell. Treat the output as a secret.
 - If Node dependencies are missing, run `npm install` in the installed Fast Context skill directory.
 - If the script is unavailable or still fails, state that briefly and continue with local `rg --files`, `rg`, and targeted file reads.
 

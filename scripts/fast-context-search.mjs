@@ -11,7 +11,9 @@ const CORE_PATH = join(SCRIPT_DIR, "lib", "core.mjs");
 function usage() {
   return `Usage:
   fast-context-search --query <query> [--project <path>] [options]
-  fast-context-search --check-key
+  fast-context-search --check-key [--db-path <path>]
+  fast-context-search --print-key [--db-path <path>]
+  fast-context-search --key-env [--db-path <path>]
 
 Options:
   -q, --query <text>              Natural-language search query
@@ -32,7 +34,10 @@ Options:
       --no-bootstrap              Disable bootstrap phase
       --bootstrap-max-turns <n>   Bootstrap phase turns
       --bootstrap-max-commands <n> Bootstrap commands per turn
-      --check-key                 Verify Windsurf key discovery without printing the key
+      --check-key                 Verify Windsurf key discovery without printing the full key
+      --print-key                 Print the full discovered Windsurf key to stdout
+      --key-env                   Print an export command for WINDSURF_API_KEY
+      --db-path <path>            Custom Windsurf state.vscdb path for key commands
       --help                      Show this help`;
 }
 
@@ -77,6 +82,9 @@ function parseArgs(argv) {
     bootstrapMaxTurns: 2,
     bootstrapMaxCommands: 6,
     checkKey: false,
+    printKey: false,
+    keyEnv: false,
+    dbPath: undefined,
     help: false,
   };
 
@@ -155,6 +163,16 @@ function parseArgs(argv) {
       case "--check-key":
         opts.checkKey = true;
         break;
+      case "--print-key":
+        opts.printKey = true;
+        break;
+      case "--key-env":
+        opts.keyEnv = true;
+        break;
+      case "--db-path":
+        opts.dbPath = takeValue(argv, i, arg);
+        i++;
+        break;
       case "-h":
       case "--help":
         opts.help = true;
@@ -165,7 +183,12 @@ function parseArgs(argv) {
   }
 
   opts.projectRoot = resolve(opts.projectRoot);
+  if (opts.dbPath) opts.dbPath = resolve(opts.dbPath);
   opts.excludePaths = [...new Set(opts.excludePaths)];
+  const keyCommandCount = [opts.checkKey, opts.printKey, opts.keyEnv].filter(Boolean).length;
+  if (keyCommandCount > 1) {
+    throw new Error("Choose only one key command: --check-key, --print-key, or --key-env");
+  }
   return opts;
 }
 
@@ -173,6 +196,10 @@ function maskKey(key) {
   if (!key) return "";
   if (key.length <= 12) return `${key.slice(0, 2)}...${key.slice(-2)}`;
   return `${key.slice(0, 8)}...${key.slice(-6)}`;
+}
+
+function shellQuote(value) {
+  return `'${String(value).replaceAll("'", "'\\''")}'`;
 }
 
 async function loadCore() {
@@ -203,14 +230,25 @@ async function main() {
   try {
     const { searchWithContent, extractKeyInfo } = await loadCore();
 
-    if (opts.checkKey) {
-      const result = await extractKeyInfo();
+    if (opts.checkKey || opts.printKey || opts.keyEnv) {
+      const result = await extractKeyInfo(opts.dbPath);
       if (result.error) {
-        console.error(`Windsurf key check failed: ${result.error}`);
+        console.error(`Windsurf key discovery failed: ${result.error}`);
         if (result.hint) console.error(result.hint);
         if (result.db_path) console.error(`DB path: ${result.db_path}`);
         process.exit(1);
       }
+
+      if (opts.printKey) {
+        console.log(result.api_key);
+        return;
+      }
+
+      if (opts.keyEnv) {
+        console.log(`export WINDSURF_API_KEY=${shellQuote(result.api_key)}`);
+        return;
+      }
+
       console.log("Windsurf key discovered.");
       console.log(`Key: ${maskKey(result.api_key)}`);
       console.log(`Source: ${result.db_path}`);
