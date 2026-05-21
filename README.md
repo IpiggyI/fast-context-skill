@@ -89,6 +89,7 @@ The workflow runs on:
 - a weekly scheduled check
 
 On schedule, it checks whether the current package version already exists on npm. If it exists, the workflow skips publishing. If it does not exist, the workflow publishes.
+If `NPM_TOKEN` is not configured, the workflow skips publishing and exits successfully.
 
 To enable publishing:
 

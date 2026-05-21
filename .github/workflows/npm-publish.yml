@@ -34,13 +34,18 @@ jobs:
 
       - name: Check package version
         id: version
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         shell: bash
         run: |
           PKG="$(node -p "require('./package.json').name")"
           VERSION="$(node -p "require('./package.json').version")"
           echo "pkg=${PKG}" >> "$GITHUB_OUTPUT"
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
-          if npm view "${PKG}@${VERSION}" version >/dev/null 2>&1; then
+          if [[ -z "${NODE_AUTH_TOKEN}" ]]; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::NPM_TOKEN is not configured; skipping npm publish."
+          elif npm view "${PKG}@${VERSION}" version >/dev/null 2>&1; then
             echo "publish=false" >> "$GITHUB_OUTPUT"
             echo "${PKG}@${VERSION} already exists on npm; skipping publish."
           else
