@@ -6,6 +6,39 @@ Fast Context Skill is an Agent Skill and CLI adaptation of [`SammySnake-d/fast-c
 
 It is a fork-style rewrite of the original MCP project: the Windsurf Devstral semantic search core is vendored from upstream `v1.3.0-beta.2`, while the MCP server wrapper is removed. Any Skills-compatible agent that can run local scripts can use this Skill; Codex is one supported install target, not a requirement.
 
+## Quick Start
+
+1. Install the Skill:
+
+```bash
+npx skills add oulkurt/fast-context-skill --skill fast-context -y
+```
+
+To install to every agent target supported by your local `skills` CLI:
+
+```bash
+npx skills add oulkurt/fast-context-skill --skill fast-context -a '*' -y
+```
+
+2. Get or export the Windsurf key:
+
+```bash
+npx --yes github:oulkurt/fast-context-skill --print-key
+eval "$(npx --yes github:oulkurt/fast-context-skill --key-env)"
+```
+
+`--print-key` prints the full key locally. `--key-env` exports `WINDSURF_API_KEY` into the current shell. Use `npx --yes github:oulkurt/fast-context-skill --check-key` when you only want to verify discovery without printing the full secret.
+
+3. Use Fast Context:
+
+Invoke `$fast-context` or your agent's skill invocation convention, or run the CLI directly:
+
+```bash
+npx --yes github:oulkurt/fast-context-skill \
+  --project "/absolute/path/to/project" \
+  --query "Where is authentication implemented?"
+```
+
 ## What Changed From The MCP Repo
 
 - Keeps the upstream semantic search loop that talks to Windsurf Devstral.
