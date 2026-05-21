@@ -166,3 +166,6 @@ npm pack --dry-run
 This repository vendors and adapts code from [`SammySnake-d/fast-context-mcp`](https://github.com/SammySnake-d/fast-context-mcp), originally licensed under MIT. The vendored upstream license is preserved at `scripts/lib/LICENSE.fast-context-mcp`.
 
 This project is not affiliated with Windsurf.
+
+## other
+Thanks https://linux.do
