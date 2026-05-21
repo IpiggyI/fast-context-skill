@@ -1,5 +1,7 @@
 # Fast Context Skill
 
+[![skills.sh](https://skills.sh/b/oulkurt/fast-context-skill)](https://skills.sh/oulkurt/fast-context-skill)
+
 Fast Context Skill is a Codex Skill and CLI adaptation of [`SammySnake-d/fast-context-mcp`](https://github.com/SammySnake-d/fast-context-mcp).
 
 It is a fork-style rewrite of the original MCP project: the Windsurf Devstral semantic search core is vendored from upstream `v1.3.0-beta.2`, while the MCP server wrapper is removed. Codex can use this as a Skill by running a local script, which avoids loading the Fast Context MCP tool schema in every session.
@@ -14,6 +16,20 @@ It is a fork-style rewrite of the original MCP project: the Windsurf Devstral se
 - Adds npm packaging and GitHub Actions publishing.
 
 ## Install As A Codex Skill
+
+One-command install via the open `skills` CLI:
+
+```bash
+npx skills add oulkurt/fast-context-skill --skill fast-context -a codex -y
+```
+
+For a global Codex install:
+
+```bash
+npx skills add oulkurt/fast-context-skill --skill fast-context -a codex -g -y
+```
+
+Manual install:
 
 ```bash
 git clone https://github.com/oulkurt/fast-context-skill.git ~/.codex/skills/fast-context
