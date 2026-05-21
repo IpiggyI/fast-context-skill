@@ -68,10 +68,10 @@ node scripts/fast-context-search.mjs \
   --query "Where is the database connection pool configured?"
 ```
 
-From npm after publish:
+From GitHub without cloning:
 
 ```bash
-npx fast-context-skill \
+npx --yes github:oulkurt/fast-context-skill \
   --project "/absolute/path/to/project" \
   --query "Where is the database connection pool configured?"
 ```
@@ -81,6 +81,16 @@ npx fast-context-skill \
 This project still depends on Windsurf's Devstral backend. It replaces the MCP layer, not the Windsurf backend.
 
 The script can usually discover the key automatically from a logged-in Windsurf desktop installation, so most users do not need to copy a key manually.
+
+No-clone one-liners:
+
+```bash
+npx --yes github:oulkurt/fast-context-skill --print-key
+eval "$(npx --yes github:oulkurt/fast-context-skill --key-env)"
+npx --yes github:oulkurt/fast-context-skill --check-key
+```
+
+Use `--print-key` when you intentionally need to see the full key locally, `--key-env` to export `WINDSURF_API_KEY` into the current shell, and `--check-key` to verify discovery without printing the full secret.
 
 After installing the Skill, verify local key discovery:
 
@@ -100,9 +110,7 @@ For Codex global installs, that path is usually:
 node ~/.codex/skills/fast-context/scripts/fast-context-search.mjs --check-key
 ```
 
-`--check-key` prints only a masked key and the local database path. It does not print the full secret.
-
-If you need the full key locally, print it with:
+After installing the Skill, print the full key locally with:
 
 ```bash
 node /path/to/installed/fast-context/scripts/fast-context-search.mjs --print-key
@@ -126,13 +134,6 @@ From a repository clone:
 node scripts/fast-context-search.mjs --check-key
 node scripts/fast-context-search.mjs --print-key
 eval "$(node scripts/fast-context-search.mjs --key-env)"
-```
-
-Without cloning, you can run the GitHub package directly with `npx`:
-
-```bash
-npx --yes github:oulkurt/fast-context-skill --check-key
-eval "$(npx --yes github:oulkurt/fast-context-skill --key-env)"
 ```
 
 Treat the value like any other API secret:
