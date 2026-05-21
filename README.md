@@ -13,7 +13,7 @@ It is a fork-style rewrite of the original MCP project: the Windsurf Devstral se
 - Removes the MCP server entry point from the runtime path.
 - Adds an agent-friendly `SKILL.md` workflow.
 - Adds `scripts/fast-context-search.mjs` as the direct CLI entry point.
-- Adds npm packaging and GitHub Actions publishing.
+- Adds npm packaging for direct CLI use.
 
 ## Install With skills CLI
 
@@ -139,33 +139,6 @@ Treat the value like any other API secret:
 
 - Do not commit it.
 - Do not paste it into GitHub issues, README files, workflows, or logs.
-- Do not add it as an npm publish secret. npm publishing uses `NPM_TOKEN`, not `WINDSURF_API_KEY`.
-
-## npm Publishing
-
-The repository includes `.github/workflows/npm-publish.yml`.
-
-The workflow runs on:
-
-- manual `workflow_dispatch`
-- pushed version tags such as `v0.1.0`
-- a weekly scheduled check
-
-On schedule, it checks whether the current package version already exists on npm. If it exists, the workflow skips publishing. If it does not exist, the workflow publishes.
-If `NPM_TOKEN` is not configured, the workflow skips publishing and exits successfully.
-
-To enable publishing:
-
-1. Create an npm automation token.
-2. Add it to the GitHub repository secrets as `NPM_TOKEN`.
-3. Push a version tag or run the workflow manually.
-
-Example release:
-
-```bash
-npm version patch
-git push --follow-tags
-```
 
 ## Development
 
