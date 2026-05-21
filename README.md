@@ -6,28 +6,31 @@ Fast Context Skill is an Agent Skill and CLI adaptation of [`SammySnake-d/fast-c
 
 It is a fork-style rewrite of the original MCP project: the Windsurf Devstral semantic search core is vendored from upstream `v1.3.0-beta.2`, while the MCP server wrapper is removed. Any Skills-compatible agent that can run local scripts can use this Skill; Codex is one supported install target, not a requirement.
 
+## Prerequisites
+
+- Install [Windsurf desktop](https://windsurf.com/) and log in once.
+
+That is the only setup. The Skill reads the API key directly from Windsurf's local state DB (`state.vscdb`), so you do **not** need to keep Windsurf running, copy a key, or set any environment variable. Manual key handling is only required if you do not have Windsurf desktop installed (for example on CI or a remote server) — see [Windsurf API Key](#windsurf-api-key).
+
 ## Quick Start
 
-1. Install the Skill:
+1. Install the Skill (interactive — picks up agent targets from your local `skills` CLI):
 
 ```bash
-npx skills add oulkurt/fast-context-skill --skill fast-context -y
+npx skills add oulkurt/fast-context-skill
 ```
 
-To install to every agent target supported by your local `skills` CLI:
+For a fully non-interactive install to every supported agent target:
 
 ```bash
 npx skills add oulkurt/fast-context-skill --skill fast-context -a '*' -y
 ```
 
-2. Get or export the Windsurf key:
+2. (Optional) Verify the Windsurf key is auto-discovered:
 
 ```bash
-npx --yes github:oulkurt/fast-context-skill --print-key
-eval "$(npx --yes github:oulkurt/fast-context-skill --key-env)"
+npx --yes github:oulkurt/fast-context-skill --check-key
 ```
-
-`--print-key` prints the full key locally. `--key-env` exports `WINDSURF_API_KEY` into the current shell. Use `npx --yes github:oulkurt/fast-context-skill --check-key` when you only want to verify discovery without printing the full secret.
 
 3. Use Fast Context:
 
@@ -113,61 +116,37 @@ npx --yes github:oulkurt/fast-context-skill \
 
 This project still depends on Windsurf's Devstral backend. It replaces the MCP layer, not the Windsurf backend.
 
-The script can usually discover the key automatically from a logged-in Windsurf desktop installation, so most users do not need to copy a key manually.
+**Most users can skip this section.** If you have [Windsurf desktop](https://windsurf.com/) installed and have logged in once, the script auto-discovers the key from `state.vscdb` on every run — no env var, no copy/paste, and Windsurf does not need to be running.
+
+Manual key handling is only needed when:
+
+- You do not have Windsurf desktop installed (CI, remote server, container).
+- You want to override the auto-discovered key with a different one.
+- Auto-discovery fails and you need to verify or inspect the value.
 
 No-clone one-liners:
 
 ```bash
-npx --yes github:oulkurt/fast-context-skill --print-key
-eval "$(npx --yes github:oulkurt/fast-context-skill --key-env)"
-npx --yes github:oulkurt/fast-context-skill --check-key
+npx --yes github:oulkurt/fast-context-skill --check-key   # verify, masked output
+npx --yes github:oulkurt/fast-context-skill --print-key   # print full key
+eval "$(npx --yes github:oulkurt/fast-context-skill --key-env)"   # export to current shell
 ```
 
-Use `--print-key` when you intentionally need to see the full key locally, `--key-env` to export `WINDSURF_API_KEY` into the current shell, and `--check-key` to verify discovery without printing the full secret.
+To persist the key across shells (only do this if you cannot rely on Windsurf desktop), add the export to your shell rc file, for example:
 
-After installing the Skill, verify local key discovery:
+```bash
+echo "export WINDSURF_API_KEY=$(npx --yes github:oulkurt/fast-context-skill --print-key)" >> ~/.zshrc
+```
+
+After installing the Skill, the same commands work against the installed script path:
 
 ```bash
 node /path/to/installed/fast-context/scripts/fast-context-search.mjs --check-key
-```
-
-For a project install, run this from the project root:
-
-```bash
-node .agents/skills/fast-context/scripts/fast-context-search.mjs --check-key
-```
-
-For Codex global installs, that path is usually:
-
-```bash
-node ~/.codex/skills/fast-context/scripts/fast-context-search.mjs --check-key
-```
-
-After installing the Skill, print the full key locally with:
-
-```bash
 node /path/to/installed/fast-context/scripts/fast-context-search.mjs --print-key
-```
-
-If you want to set `WINDSURF_API_KEY` for the current shell in one command:
-
-```bash
 eval "$(node /path/to/installed/fast-context/scripts/fast-context-search.mjs --key-env)"
 ```
 
-For a project install, the same command is:
-
-```bash
-eval "$(node .agents/skills/fast-context/scripts/fast-context-search.mjs --key-env)"
-```
-
-From a repository clone:
-
-```bash
-node scripts/fast-context-search.mjs --check-key
-node scripts/fast-context-search.mjs --print-key
-eval "$(node scripts/fast-context-search.mjs --key-env)"
-```
+For a project install, that path is `.agents/skills/fast-context/scripts/fast-context-search.mjs`. For a global Codex install, it is usually `~/.codex/skills/fast-context/scripts/fast-context-search.mjs`. From a repository clone, use `scripts/fast-context-search.mjs` directly.
 
 Treat the value like any other API secret:
 
