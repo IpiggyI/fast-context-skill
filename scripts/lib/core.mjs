@@ -643,7 +643,7 @@ function getToolDefinitions(maxCommands = 8) {
 async function autoDiscoverApiKey() {
   try {
     const result = await extractKey();
-    if (result.api_key && result.api_key.startsWith("sk-")) {
+    if (result.api_key && (result.api_key.startsWith("sk-") || result.api_key.startsWith("devin-"))) {
       return result.api_key;
     }
   } catch {
