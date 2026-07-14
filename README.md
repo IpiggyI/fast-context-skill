@@ -48,7 +48,7 @@ npx --yes github:oulkurt/fast-context-skill \
 - Keeps local command execution helpers for `rg`, file reads, tree output, and context gathering.
 - Removes the MCP server entry point from the runtime path.
 - Adds an agent-friendly `SKILL.md` workflow.
-- Adds `scripts/fast-context-search.mjs` as the direct CLI entry point.
+- Adds `skills/fast-context/scripts/fast-context-search.mjs` as the direct CLI entry point.
 - Adds npm packaging for direct CLI use.
 
 ## Install With skills CLI
@@ -99,7 +99,7 @@ From a clone:
 
 ```bash
 npm install
-node scripts/fast-context-search.mjs \
+node skills/fast-context/scripts/fast-context-search.mjs \
   --project "/absolute/path/to/project" \
   --query "Where is the database connection pool configured?"
 ```
@@ -146,7 +146,7 @@ node /path/to/installed/fast-context/scripts/fast-context-search.mjs --print-key
 eval "$(node /path/to/installed/fast-context/scripts/fast-context-search.mjs --key-env)"
 ```
 
-For a project install, that path is `.agents/skills/fast-context/scripts/fast-context-search.mjs`. For a global Codex install, it is usually `~/.codex/skills/fast-context/scripts/fast-context-search.mjs`. From a repository clone, use `scripts/fast-context-search.mjs` directly.
+For a project install, that path is `.agents/skills/fast-context/scripts/fast-context-search.mjs`. For a global Codex install, it is usually `~/.codex/skills/fast-context/scripts/fast-context-search.mjs`. From a repository clone, use `skills/fast-context/scripts/fast-context-search.mjs` directly.
 
 Treat the value like any other API secret:
 
@@ -163,7 +163,7 @@ npm pack --dry-run
 
 ## Attribution
 
-This repository vendors and adapts code from [`SammySnake-d/fast-context-mcp`](https://github.com/SammySnake-d/fast-context-mcp), originally licensed under MIT. The vendored upstream license is preserved at `scripts/lib/LICENSE.fast-context-mcp`.
+This repository vendors and adapts code from [`SammySnake-d/fast-context-mcp`](https://github.com/SammySnake-d/fast-context-mcp), originally licensed under MIT. The vendored upstream license is preserved at `skills/fast-context/scripts/lib/LICENSE.fast-context-mcp`.
 
 This project is not affiliated with Windsurf.
 
