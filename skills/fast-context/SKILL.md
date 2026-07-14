@@ -21,14 +21,10 @@ This skill runs `scripts/fast-context-search.mjs` directly from the installed sk
 
 Skip this skill for purely conversational tasks, tiny known-file edits, or third-party library documentation lookups. Use a documentation retrieval skill such as Context7 for current external API docs.
 
-## Setup
-
-On first use, install the runtime dependencies once by running `npm install` in the installed skill directory (the directory containing this `SKILL.md` and `package.json`). This fetches `@vscode/ripgrep`, `sql.js`, and `tree-node-cli`, including the bundled `rg` binary, into a local `node_modules`. The install requires network access. If the dependencies are already present, skip this step.
-
 ## Workflow
 
 1. Build one natural-language query that names the user goal and asks for the exact context needed. Prefer "Where", "What", and "How" questions.
-2. On first use, run the one-time Setup above. Then resolve the installed skill directory and run `node <skill-directory>/scripts/fast-context-search.mjs` with `--project` set to the absolute project root and `--query` set to the natural-language search query.
+2. Resolve the installed skill directory and run `node <skill-directory>/scripts/fast-context-search.mjs` with `--project` set to the absolute project root and `--query` set to the natural-language search query.
 3. Read the returned file ranges and use the suggested grep keywords with local tools to inspect exact definitions.
 4. Run a completeness check: make sure all relevant classes, functions, variables, types, config, routes, call sites, and tests have been identified with full signatures.
 5. If anything is missing, recursively query Fast Context again with the missing concept, symbol, or flow.

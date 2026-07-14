@@ -7,7 +7,7 @@ import { join, resolve } from "node:path";
 import assert from "node:assert/strict";
 import initSqlJs from "sql.js";
 
-const scriptPath = resolve("skills", "fast-context", "scripts", "fast-context-search.mjs");
+const scriptPath = resolve("scripts", "fast-context-search.mjs");
 const tmpRoot = mkdtempSync(join(tmpdir(), "fast-context-skill-test-"));
 const fakeKey = "sk-test-windsurf-key-1234567890";
 

@@ -98,8 +98,9 @@ node /path/to/installed/fast-context/scripts/fast-context-search.mjs \
 From a clone:
 
 ```bash
+cd skills/fast-context
 npm install
-node skills/fast-context/scripts/fast-context-search.mjs \
+node scripts/fast-context-search.mjs \
   --project "/absolute/path/to/project" \
   --query "Where is the database connection pool configured?"
 ```
@@ -156,6 +157,7 @@ Treat the value like any other API secret:
 ## Development
 
 ```bash
+cd skills/fast-context
 npm install
 npm test
 npm pack --dry-run
